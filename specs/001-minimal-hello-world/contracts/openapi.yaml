@@ -1,0 +1,53 @@
+openapi: 3.0.3
+info:
+  title: Minimal Hello World API
+  description: >
+    Minimal REST API exposing a single endpoint that returns a plain-text
+    greeting. No authentication, no database, no additional endpoints.
+  version: 1.0.0
+  contact:
+    name: Project Team
+
+servers:
+  - url: http://localhost:8080
+    description: Local development server
+
+paths:
+  /hello:
+    get:
+      operationId: getHello
+      summary: Retrieve greeting
+      description: >
+        Returns the plain-text greeting "Hello World". This is the only
+        endpoint exposed by the application.
+      tags:
+        - Greeting
+      responses:
+        '200':
+          description: Successful response
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Hello World
+              example: Hello World
+        '405':
+          description: Method Not Allowed
+          headers:
+            Allow:
+              schema:
+                type: string
+                enum: [GET]
+              description: Only GET method is supported
+        '404':
+          description: Not Found
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: Not Found
+
+components:
+  tags:
+    - name: Greeting
+      description: Single endpoint for retrieving the greeting
